@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clock</title>
+  <style>
+    .clock{
+      position: relative;
+      background: url("./images/clock.png") #eee;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      margin: 0 auto;
+      border: 20px #ddd solid;
+      box-shadow: 0px 0px 10px 3px rgba(200,200,200,0.7) inset,0px 0px 10px 3px rgba(200,200,200,0.7) inset,
+      0px 0px 10px 3px rgba(200,200,200,0.7) inset;
+    }
+    .origin{
+      position: absolute;
+      z-index: 5;
+      background-color: #999;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+    }
+    .clock-line{
+      position: absolute;
+      z-index: 4;
+      /*box-shadow:1px -3px 8px 3px #aaa;*/
+      left: 50%;
+      top: 50%;
+    }
+    .hour-line{
+      height: 80px;
+      width: 7px;
+      -webkit-transform-origin: 50% 0;
+      -moz-transform-origin: 50% 0;
+      -ms-transform-origin: 50% 0;
+      -o-transform-origin: 50% 0;
+      transform-origin: 50% 0;
+      background-color: #000;
+      border-radius: 7px;
+      margin-top: -3px;
+      margin-left: -3px;
+      background-color: rgba(0,0,0,0.6);
+  
+    }
+    .min-line{
+      height: 110px;
+      width: 5px;
+      -webkit-transform-origin: 50% 7.5%;
+      -moz-transform-origin: 50% 7.5%;
+      -ms-transform-origin: 50% 7.5%;
+      -o-transform-origin: 50% 7.5%;
+      transform-origin:  50% 7.5%;
+      background-color: #000;
+      border-radius: 5px;
+      margin-top: -9px;
+      margin-left: -2px;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .sec-line{
+      height: 130px;
+      width: 3px;
+      -webkit-transform-origin: 50% 11%;
+      -moz-transform-origin: 50% 11%;
+      -ms-transform-origin: 50% 11%;
+      -o-transform-origin: 50% 11%;
+      transform-origin: 50% 11%;
+      background-color: #ff0000;
+      border-radius: 3px;
+      margin-top: -15px;
+      margin-left: -1px;
+    }
+    .date-info{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      line-height: 28px;
+      height: 28px;
+      width: 180px;
+      margin-left: -85px;
+      margin-top: 70px;
+      font-weight: bold;
+      color: #000;
+    }
+    .time-info{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 50px;
+      width: 165px;
+      margin-left: -80px;
+      margin-top: -100px;
+    }
+    .time-info .time{
+      background-color: #a0a0a0;
+      float: left;
+      margin: 2px;
+      width: 50px;
+      height: 50px;
+      border-radius: 7px;
+      color: #fff;
+      font: 30px/50px bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="clock">
+  <div class="origin">
+  </div>
+  <div class="clock-line hour-line" id="hour_line"></div>
+  <div class="clock-line min-line" id="min_line"></div>
+  <div class="clock-line sec-line" id="sec_line"></div>
+  <div class="date-info" id="date_box"></div>
+  <div class="time-info" id="time_box">
+    <div class="time" id="hour_time"></div>
+    <div class="time" id="min_time"></div>
+    <div class="time" id="sec_time"></div>
+  </div>
+</div>
+
+<script>
+  hour_line=document.getElementById("hour_line");
+  min_line=document.getElementById("min_line");
+  sec_line=document.getElementById("sec_line");
+  date_info=document.getElementById("date_box");
+  hour_time=document.getElementById("hour_time");
+  min_time=document.getElementById("min_time");
+  sec_time=document.getElementById("sec_time");
+  setInterval(setTime,1000);
+  function setTime()
+  {
+    let nowtime = new Date();
+    let year = nowtime.getFullYear(),
+      month = nowtime.getMonth()+1,
+      day = nowtime.getDay(),
+      hours = nowtime.getHours(),
+      minutes = nowtime.getMinutes(),
+      seconds = nowtime.getSeconds(),
+      date = nowtime.getDate();
+    let weekday =["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+    date_info.innerHTML=year+"年"+month+"月"+date+"日  "+weekday[day];
+    hour_time.innerHTML = hours >=10 ? hours : "0"+hours;
+    min_time.innerHTML = minutes >=10 ? minutes : "0"+minutes;
+    sec_time.innerHTML = seconds >=10 ? seconds : "0"+seconds;
+    hour_line.style.transform="rotate("+((hours-12)*30-180+(minutes/60)*30)+"deg"+")";
+    min_line.style.transform="rotate("+(minutes*6-180)+"deg"+")";
+    sec_line.style.transform="rotate("+(seconds*6-180)+"deg"+")";
+  };
+  
+</script>
+</body>
+</html>
